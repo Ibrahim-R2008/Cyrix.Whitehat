@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OTP Test</title>
+</head>
+<body>
+    <h1>OTP Test for hima.ramy2008@gmail.com</h1>
+    <input type="email" id="testEmail" value="hima.ramy2008@gmail.com" placeholder="Enter email">
+    <button onclick="testOTP()">Send OTP</button>
+    <div id="result"></div>
+
+    <script>
+        function testOTP() {
+            const email = document.getElementById('testEmail').value;
+            
+            // Generate demo OTP
+            const demoOTP = Math.floor(100000 + Math.random() * 900000).toString();
+            console.log(`Demo OTP for ${email}: ${demoOTP}`);
+            
+            // Show OTP in alert
+            alert(`🔐 Your OTP Code: ${demoOTP}\n\nFor: ${email}\nEnter this code in the form.`);
+            
+            // Store demo OTP
+            window.demoOTPs = window.demoOTPs || {};
+            window.demoOTPs[email] = demoOTP;
+            
+            // Show result
+            document.getElementById('result').innerHTML = `
+                <h2>✅ OTP Generated Successfully!</h2>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>OTP:</strong> ${demoOTP}</p>
+                <p><strong>Status:</strong> Ready for verification</p>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        input, button { padding: 10px; margin: 5px; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>OTP Verification Test</h1>
+    
+    <div class="test-section">
+        <h3>Step 1: Send OTP</h3>
+        <input type="email" id="testEmail" placeholder="Enter Gmail address" value="cyrix.whitehats@gmail.com">
+        <select id="userType">
+            <option value="whitehat">White Hat</option>
+            <option value="client">Client</option>
+        </select>
+        <button onclick="sendOTP()">Send OTP</button>
+        <div id="sendResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Step 2: Verify OTP</h3>
+        <input type="text" id="otpCode" placeholder="Enter 6-digit OTP" maxlength="6">
+        <button onclick="verifyOTP()">Verify OTP</button>
+        <div id="verifyResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>Backend Status</h3>
+        <button onclick="checkHealth()">Check Backend Health</button>
+        <div id="healthResult"></div>
+    </div>
+
+    <script>
+        async function sendOTP() {
+            const email = document.getElementById('testEmail').value;
+            const userType = document.getElementById('userType').value;
+            const resultDiv = document.getElementById('sendResult');
+            
+            if (!email) {
+                resultDiv.innerHTML = '<div class="error">Please enter an email address</div>';
+                return;
+            }
+            
+            try {
+                resultDiv.innerHTML = '<div class="info">Sending OTP...</div>';
+                
+                const response = await fetch('http://localhost:3001/api/send-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        userType: userType
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    resultDiv.innerHTML = `<div class="success">✅ OTP sent successfully to ${email}!</div>`;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ Failed to send OTP: ${data.error || 'Unknown error'}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Connection error: ${error.message}</div>`;
+            }
+        }
+        
+        async function verifyOTP() {
+            const email = document.getElementById('testEmail').value;
+            const otp = document.getElementById('otpCode').value;
+            const userType = document.getElementById('userType').value;
+            const resultDiv = document.getElementById('verifyResult');
+            
+            if (!email || !otp) {
+                resultDiv.innerHTML = '<div class="error">Please enter both email and OTP</div>';
+                return;
+            }
+            
+            try {
+                resultDiv.innerHTML = '<div class="info">Verifying OTP...</div>';
+                
+                const response = await fetch('http://localhost:3001/api/verify-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        otp: otp,
+                        userType: userType
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    resultDiv.innerHTML = `<div class="success">✅ OTP verified successfully!</div>`;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ Verification failed: ${data.error || 'Invalid OTP'}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Connection error: ${error.message}</div>`;
+            }
+        }
+        
+        async function checkHealth() {
+            const resultDiv = document.getElementById('healthResult');
+            
+            try {
+                resultDiv.innerHTML = '<div class="info">Checking backend health...</div>';
+                
+                const response = await fetch('http://localhost:3001/api/health');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `<div class="success">✅ Backend is healthy: ${data.message}</div>`;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ Backend health check failed</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Cannot connect to backend: ${error.message}</div>`;
+            }
+        }
+        
+        // Auto-check health on page load
+        window.onload = function() {
+            checkHealth();
+        };
+    </script>
+</body>
+</html>

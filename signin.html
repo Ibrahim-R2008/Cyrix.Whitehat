@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - White Hat Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            text-align: center;
+        }
+
+        .back-link a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: #e53e3e;
+            font-size: 0.9em;
+            margin-top: 5px;
+            font-weight: bold;
+            background: #fed7d7;
+            padding: 5px 8px;
+            border-radius: 4px;
+            border-left: 4px solid #e53e3e;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        .input-error {
+            border-color: #e53e3e !important;
+            background-color: #fed7d7;
+        }
+
+        .input-success {
+            border-color: #38a169 !important;
+            background-color: #f0fff4;
+        }
+
+        .success-indicator {
+            color: #38a169;
+            font-size: 0.9em;
+            margin-top: 5px;
+            font-weight: bold;
+            background: #f0fff4;
+            padding: 5px 8px;
+            border-radius: 4px;
+            border-left: 4px solid #38a169;
+            display: none;
+        }
+
+        .success-indicator.show {
+            display: block;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .user-type-indicator {
+            background: #667eea;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .success {
+            color: #38a169;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .success-message {
+            background: #f0fff4;
+            border: 2px solid #38a169;
+            color: #38a169;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .otp-section {
+            background: #f8f9ff;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .otp-section.show {
+            display: block;
+        }
+
+        .otp-title {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .otp-info {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .otp-input-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .otp-digit {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            transition: border-color 0.3s ease;
+        }
+
+        .otp-digit:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .otp-digit.filled {
+            border-color: #38a169;
+            background-color: #f0fff4;
+        }
+
+        .otp-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.9em;
+        }
+
+        .btn-outline {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-outline:hover {
+            background: #667eea;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><img src="logo.png" alt="White Hat Platform" style="height: 55px; vertical-align: middle; margin-right: 15px;">Sign Up</h1>
+        <div class="user-type-indicator" id="userTypeIndicator">
+            Loading...
+        </div>
+
+        <div class="success-message" id="successMessage">
+            ✅ All information is valid! Ready to create your account.
+        </div>
+
+        <form id="signupForm">
+            <!-- White Hat Hacker Fields -->
+            <div id="whitehackerFields" class="hidden">
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" name="name" required>
+                    <div class="error" id="nameError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="purpose">I'm looking for *</label>
+                    <select id="purpose" name="purpose" required>
+                        <option value="">Select Purpose</option>
+                        <option value="job">Job Opportunities</option>
+                        <option value="training">Training & Learning</option>
+                    </select>
+                    <div class="error" id="purposeError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="dob">Date of Birth *</label>
+                    <input type="date" id="dob" name="dob" required>
+                    <div class="error" id="dobError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gender *</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                        <option value="prefer-not-to-say">Prefer not to say</option>
+                    </select>
+                    <div class="error" id="genderError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="nationalId">National ID Number *</label>
+                    <input type="text" id="nationalId" name="nationalId" required>
+                    <div class="error" id="nationalIdError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                    <button type="button" onclick="sendTestOTP('email')" style="margin-top: 5px; padding: 5px 10px; background: #4299e1; color: white; border: none; border-radius: 4px;">Send OTP</button>
+                    <span class="error-message" id="emailError"></span>
+                    <span class="success-message" id="emailSuccess"></span>
+                </div>
+
+                <div class="otp-section" id="otpSection">
+                    <div class="otp-title">📧 Email Verification</div>
+                    <div class="otp-info" id="otpInfo">We've sent a 6-digit code to your email</div>
+                    <div class="otp-input-group">
+                        <input type="text" class="otp-digit" id="otp1" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" id="otp2" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" id="otp3" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" id="otp4" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" id="otp5" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" id="otp6" maxlength="1" pattern="[0-9]">
+                    </div>
+                    <div class="error" id="otpError"></div>
+                    <div class="otp-actions">
+                        <button type="button" class="btn btn-outline btn-small" id="resendOtp">Resend Code</button>
+                        <button type="button" class="btn btn-primary btn-small" id="verifyOtp">Verify Code</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password *</label>
+                    <input type="password" id="password" name="password" required>
+                    <div class="error" id="passwordError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password *</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    <div class="error" id="confirmPasswordError"></div>
+                </div>
+            </div>
+
+            <!-- Client Fields -->
+            <div id="clientFields" class="hidden">
+                <div class="form-group">
+                    <label for="clientType">I am a *</label>
+                    <select id="clientType" name="clientType" required>
+                        <option value="">Select Type</option>
+                        <option value="person">Individual Person</option>
+                        <option value="company">Company/Organization</option>
+                    </select>
+                    <div class="error" id="clientTypeError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="companyName">Name *</label>
+                    <input type="text" id="companyName" name="companyName" required placeholder="Enter your name or company name">
+                    <div class="error" id="companyNameError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Date of Birth *</label>
+                    <input type="date" id="date" name="date" required>
+                    <div class="error" id="dateError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="purpose">Purpose/Requirements *</label>
+                    <select id="purpose" name="purpose" required>
+                        <option value="">Select Purpose</option>
+                        <option value="penetration-testing">Penetration Testing</option>
+                        <option value="vulnerability-assessment">Vulnerability Assessment</option>
+                        <option value="security-audit">Security Audit</option>
+                        <option value="incident-response">Incident Response</option>
+                        <option value="security-consultation">Security Consultation</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <div class="error" id="purposeError"></div>
+                </div>
+
+                <div class="form-group" id="clientNationalIdGroup">
+                    <label for="clientNationalId">National ID Number *</label>
+                    <input type="text" id="clientNationalId" name="clientNationalId">
+                    <div class="error" id="clientNationalIdError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="clientEmail">Email *</label>
+                    <input type="email" id="clientEmail" name="clientEmail" required>
+                    <div class="error" id="clientEmailError"></div>
+                </div>
+
+                <div class="otp-section" id="clientOtpSection">
+                    <div class="otp-title">📧 Email Verification</div>
+                    <div class="otp-info" id="clientOtpInfo">We've sent a 6-digit code to your email</div>
+                    <div class="otp-input-group">
+                        <input type="text" class="otp-digit" id="clientOtp1" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" id="clientOtp2" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" id="clientOtp3" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" id="clientOtp4" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" id="clientOtp5" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" id="clientOtp6" maxlength="1" pattern="[0-9]">
+                    </div>
+                    <div class="error" id="clientOtpError"></div>
+                    <div class="otp-actions">
+                        <button type="button" class="btn btn-outline btn-small" id="clientResendOtp">Resend Code</button>
+                        <button type="button" class="btn btn-primary btn-small" id="clientVerifyOtp">Verify Code</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="clientPassword">Password *</label>
+                    <input type="password" id="clientPassword" name="clientPassword" required>
+                    <div class="error" id="clientPasswordError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="clientConfirmPassword">Confirm Password *</label>
+                    <input type="password" id="clientConfirmPassword" name="clientConfirmPassword" required>
+                    <div class="error" id="clientConfirmPasswordError"></div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Create Account</button>
+        </form>
+
+        <div class="back-link">
+            <a href="index.html">← Back to Home</a> | 
+            <a href="login.html">Already have an account? Login</a>
+        </div>
+    </div>
+
+    <script>
+        // Get user type from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const userType = urlParams.get('type') || 'whitehat';
+
+        // Update UI based on user type
+        const userTypeIndicator = document.getElementById('userTypeIndicator');
+        const whitehackerFields = document.getElementById('whitehackerFields');
+        const clientFields = document.getElementById('clientFields');
+
+        if (userType === 'whitehat') {
+            userTypeIndicator.textContent = '👨‍💻 Signing up as White Hat Hacker';
+            whitehackerFields.classList.remove('hidden');
+            clientFields.classList.add('hidden');
+        } else {
+            userTypeIndicator.textContent = '🏢 Signing up as Client';
+            clientFields.classList.remove('hidden');
+            whitehackerFields.classList.add('hidden');
+        }
+
+        // Form validation and submission
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Clear previous errors
+            document.querySelectorAll('.error').forEach(error => {
+                error.textContent = '';
+                error.classList.remove('show');
+            });
+            document.querySelectorAll('input, select').forEach(input => {
+                input.classList.remove('input-error');
+            });
+            
+            let isValid = true;
+
+            if (userType === 'whitehat') {
+                // Validate white hat fields
+                const name = document.getElementById('name').value.trim();
+                const dob = document.getElementById('dob').value;
+                const gender = document.getElementById('gender').value;
+                const purpose = document.getElementById('purpose').value;
+                const nationalId = document.getElementById('nationalId').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                if (!name) {
+                    showError('name', 'Name is required');
+                    isValid = false;
+                } else {
+                    const nameWords = name.trim().split(/\s+/);
+                    if (nameWords.length < 3) {
+                        showError('name', 'White Hat name must be at least 3 words (First Middle Last)');
+                        isValid = false;
+                    }
+                }
+
+                if (!dob) {
+                    showError('dob', 'Date of birth is required');
+                    isValid = false;
+                } else {
+                    // Age validation based on purpose
+                    const birthDate = new Date(dob);
+                    const today = new Date();
+                    const age = today.getFullYear() - birthDate.getFullYear();
+                    const monthDiff = today.getMonth() - birthDate.getMonth();
+                    const actualAge = (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) ? age - 1 : age;
+                    
+                    if (purpose === 'training' && actualAge <= 13) {
+                        showError('dob', `You are ${actualAge} years old. You must be older than 13 for training programs.`);
+                        isValid = false;
+                    } else if (purpose === 'job' && actualAge <= 15) {
+                        showError('dob', `You are ${actualAge} years old. You must be over 15 for job opportunities.`);
+                        isValid = false;
+                    }
+                }
+
+                if (!gender) {
+                    showError('gender', 'Gender is required');
+                    isValid = false;
+                }
+
+                if (!purpose) {
+                    showError('purpose', 'Please select your purpose');
+                    isValid = false;
+                }
+
+                if (!nationalId) {
+                    showError('nationalId', 'National ID is required');
+                    isValid = false;
+                } else if (nationalId.length !== 14) {
+                    showError('nationalId', 'National ID must be exactly 14 characters');
+                    isValid = false;
+                } else if (!/^\d{14}$/.test(nationalId)) {
+                    showError('nationalId', 'National ID must contain only numbers (14 digits)');
+                    isValid = false;
+                }
+
+                if (!email) {
+                    showError('email', 'Email is required');
+                    isValid = false;
+                } else if (!email.includes('@gmail.com')) {
+                    showError('email', 'Email must be a Gmail address (@gmail.com)');
+                    isValid = false;
+                } else if (!email.endsWith('@gmail.com')) {
+                    showError('email', 'Email must end with @gmail.com');
+                    isValid = false;
+                }
+
+                if (password.length < 6) {
+                    showError('password', 'Password must be at least 6 characters');
+                    isValid = false;
+                }
+
+                if (password !== confirmPassword) {
+                    showError('confirmPassword', 'Passwords do not match');
+                    isValid = false;
+                }
+
+                // Check email verification
+                if (!isEmailVerified) {
+                    showError('otp', 'Please verify your email address first');
+                    isValid = false;
+                }
+            } else {
+                // Validate client fields
+                const clientType = document.getElementById('clientType').value;
+                const companyName = document.getElementById('companyName').value.trim();
+                const date = document.getElementById('date').value;
+                const purpose = document.getElementById('purpose').value;
+                const clientNationalId = document.getElementById('clientNationalId').value.trim();
+                const clientEmail = document.getElementById('clientEmail').value.trim();
+                const clientPassword = document.getElementById('clientPassword').value;
+                const clientConfirmPassword = document.getElementById('clientConfirmPassword').value;
+
+                if (!clientType) {
+                    showError('clientType', 'Please select if you are a person or company');
+                    isValid = false;
+                }
+
+                if (!companyName) {
+                    showError('companyName', clientType === 'person' ? 'Your name is required' : 'Company name is required');
+                    isValid = false;
+                }
+
+                if (!date) {
+                    showError('date', 'Date of birth is required');
+                    isValid = false;
+                } else {
+                    // Age validation for clients (must be over 18)
+                    const birthDate = new Date(date);
+                    const today = new Date();
+                    const age = today.getFullYear() - birthDate.getFullYear();
+                    const monthDiff = today.getMonth() - birthDate.getMonth();
+                    const actualAge = (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) ? age - 1 : age;
+                    
+                    if (actualAge <= 18) {
+                        showError('date', `You are ${actualAge} years old. You must be over 18 to request services.`);
+                        isValid = false;
+                    }
+                }
+
+                if (!purpose) {
+                    showError('purpose', 'Purpose is required');
+                    isValid = false;
+                }
+
+                // Only validate National ID for persons, not companies
+                if (clientType === 'person') {
+                    if (!clientNationalId) {
+                        showError('clientNationalId', 'National ID is required for individuals');
+                        isValid = false;
+                    } else if (clientNationalId.length !== 14) {
+                        showError('clientNationalId', 'National ID must be exactly 14 characters');
+                        isValid = false;
+                    } else if (!/^\d{14}$/.test(clientNationalId)) {
+                        showError('clientNationalId', 'National ID must contain only numbers (14 digits)');
+                        isValid = false;
+                    }
+                }
+
+                if (!clientEmail) {
+                    showError('clientEmail', 'Email is required');
+                    isValid = false;
+                } else if (!clientEmail.includes('@gmail.com')) {
+                    showError('clientEmail', 'Email must be a Gmail address (@gmail.com)');
+                    isValid = false;
+                } else if (!clientEmail.endsWith('@gmail.com')) {
+                    showError('clientEmail', 'Email must end with @gmail.com');
+                    isValid = false;
+                }
+
+                if (clientPassword.length < 6) {
+                    showError('clientPassword', 'Password must be at least 6 characters');
+                    isValid = false;
+                }
+
+                if (clientPassword !== clientConfirmPassword) {
+                    showError('clientConfirmPassword', 'Passwords do not match');
+                    isValid = false;
+                }
+
+                // Check email verification
+                if (!isClientEmailVerified) {
+                    showError('clientOtp', 'Please verify your email address first');
+                    isValid = false;
+                }
+            }
+
+            if (isValid) {
+                // Show success message
+                const successMessage = document.getElementById('successMessage');
+                successMessage.classList.add('show');
+                
+                // Wait a moment to show success, then proceed
+                setTimeout(() => {
+                    alert('✅ Account created successfully! You can now login.');
+                    window.location.href = 'login.html';
+                }, 1000);
+            } else {
+                // Hide success message if validation fails
+                const successMessage = document.getElementById('successMessage');
+                successMessage.classList.remove('show');
+            }
+        });
+
+        // Set today's date as default for date fields
+        const today = new Date().toISOString().split('T')[0];
+        if (document.getElementById('dob')) {
+            document.getElementById('dob').max = today;
+        }
+        if (document.getElementById('date')) {
+            document.getElementById('date').value = today;
+        }
+
+        // Real-time validation functions
+        function showError(fieldId, message) {
+            const errorElement = document.getElementById(fieldId + 'Error');
+            const inputElement = document.getElementById(fieldId);
+            if (errorElement && inputElement) {
+                errorElement.textContent = message;
+                errorElement.classList.add('show');
+                inputElement.classList.add('input-error');
+            }
+        }
+
+        function clearError(fieldId) {
+            const errorElement = document.getElementById(fieldId + 'Error');
+            const inputElement = document.getElementById(fieldId);
+            if (errorElement && inputElement) {
+                errorElement.classList.remove('show');
+                inputElement.classList.remove('input-error');
+            }
+        }
+
+        function showSuccess(fieldId, message) {
+            const errorElement = document.getElementById(fieldId + 'Error');
+            const inputElement = document.getElementById(fieldId);
+            if (errorElement && inputElement) {
+                errorElement.textContent = '✅ ' + message;
+                errorElement.classList.remove('show');
+                errorElement.classList.add('success-indicator', 'show');
+                inputElement.classList.remove('input-error');
+                inputElement.classList.add('input-success');
+            }
+        }
+
+        function clearSuccess(fieldId) {
+            const errorElement = document.getElementById(fieldId + 'Error');
+            const inputElement = document.getElementById(fieldId);
+            if (errorElement && inputElement) {
+                errorElement.classList.remove('success-indicator', 'show');
+                inputElement.classList.remove('input-success');
+            }
+        }
+
+        // Add real-time validation for Name (White Hat only)
+        function addNameValidation() {
+            const nameField = document.getElementById('name');
+            if (nameField) {
+                nameField.addEventListener('input', function() {
+                    const value = this.value.trim();
+                    if (value === '') {
+                        clearError('name');
+                        clearSuccess('name');
+                    } else {
+                        const nameWords = value.split(/\s+/);
+                        if (nameWords.length < 3) {
+                            clearSuccess('name');
+                            showError('name', 'White Hat name must be at least 3 words (First Middle Last)');
+                        } else {
+                            clearError('name');
+                            showSuccess('name', 'Valid full name');
+                        }
+                    }
+                });
+            }
+        }
+
+        // Add real-time validation for National ID
+        function addNationalIdValidation(fieldId) {
+            const field = document.getElementById(fieldId);
+            if (field) {
+                field.addEventListener('input', function() {
+                    const value = this.value.trim();
+                    if (value === '') {
+                        clearError(fieldId);
+                        clearSuccess(fieldId);
+                    } else if (value.length !== 14) {
+                        clearSuccess(fieldId);
+                        showError(fieldId, 'National ID must be exactly 14 characters');
+                    } else if (!/^\d{14}$/.test(value)) {
+                        clearSuccess(fieldId);
+                        showError(fieldId, 'National ID must contain only numbers (14 digits)');
+                    } else {
+                        clearError(fieldId);
+                        showSuccess(fieldId, 'Valid National ID');
+                    }
+                });
+            }
+        }
+
+        // Add real-time validation for Email
+        function addEmailValidation(fieldId) {
+            const field = document.getElementById(fieldId);
+            if (field) {
+                field.addEventListener('input', function() {
+                    const value = this.value.trim();
+                    if (value === '') {
+                        clearError(fieldId);
+                        clearSuccess(fieldId);
+                    } else if (!value.includes('@gmail.com')) {
+                        clearSuccess(fieldId);
+                        showError(fieldId, 'Email must be a Gmail address (@gmail.com)');
+                    } else if (!value.endsWith('@gmail.com')) {
+                        clearSuccess(fieldId);
+                        showError(fieldId, 'Email must end with @gmail.com');
+                    } else {
+                        clearError(fieldId);
+                        showSuccess(fieldId, 'Valid Gmail address');
+                    }
+                });
+            }
+        }
+
+        // Add real-time validation for Password confirmation
+        function addPasswordValidation() {
+            const passwordField = document.getElementById('password');
+            const confirmField = document.getElementById('confirmPassword');
+            const clientPasswordField = document.getElementById('clientPassword');
+            const clientConfirmField = document.getElementById('clientConfirmPassword');
+
+            if (passwordField) {
+                passwordField.addEventListener('input', function() {
+                    const value = this.value;
+                    if (value === '') {
+                        clearError('password');
+                        clearSuccess('password');
+                    } else if (value.length < 6) {
+                        clearSuccess('password');
+                        showError('password', 'Password must be at least 6 characters');
+                    } else {
+                        clearError('password');
+                        showSuccess('password', 'Strong password');
+                    }
+                    
+                    // Re-validate confirm password if it has content
+                    if (confirmField && confirmField.value !== '') {
+                        if (confirmField.value !== value) {
+                            clearSuccess('confirmPassword');
+                            showError('confirmPassword', 'Passwords do not match');
+                        } else {
+                            clearError('confirmPassword');
+                            showSuccess('confirmPassword', 'Passwords match');
+                        }
+                    }
+                });
+            }
+
+            if (confirmField) {
+                confirmField.addEventListener('input', function() {
+                    const value = this.value;
+                    if (value === '') {
+                        clearError('confirmPassword');
+                        clearSuccess('confirmPassword');
+                    } else if (value !== passwordField.value) {
+                        clearSuccess('confirmPassword');
+                        showError('confirmPassword', 'Passwords do not match');
+                    } else {
+                        clearError('confirmPassword');
+                        showSuccess('confirmPassword', 'Passwords match');
+                    }
+                });
+            }
+
+            if (clientPasswordField) {
+                clientPasswordField.addEventListener('input', function() {
+                    const value = this.value;
+                    if (value === '') {
+                        clearError('clientPassword');
+                        clearSuccess('clientPassword');
+                    } else if (value.length < 6) {
+                        clearSuccess('clientPassword');
+                        showError('clientPassword', 'Password must be at least 6 characters');
+                    } else {
+                        clearError('clientPassword');
+                        showSuccess('clientPassword', 'Strong password');
+                    }
+                    
+                    // Re-validate confirm password if it has content
+                    if (clientConfirmField && clientConfirmField.value !== '') {
+                        if (clientConfirmField.value !== value) {
+                            clearSuccess('clientConfirmPassword');
+                            showError('clientConfirmPassword', 'Passwords do not match');
+                        } else {
+                            clearError('clientConfirmPassword');
+                            showSuccess('clientConfirmPassword', 'Passwords match');
+                        }
+                    }
+                });
+            }
+
+            if (clientConfirmField) {
+                clientConfirmField.addEventListener('input', function() {
+                    const value = this.value;
+                    if (value === '') {
+                        clearError('clientConfirmPassword');
+                        clearSuccess('clientConfirmPassword');
+                    } else if (value !== clientPasswordField.value) {
+                        clearSuccess('clientConfirmPassword');
+                        showError('clientConfirmPassword', 'Passwords do not match');
+                    } else {
+                        clearError('clientConfirmPassword');
+                        showSuccess('clientConfirmPassword', 'Passwords match');
+                    }
+                });
+            }
+        }
+
+        // Add real-time age validation based on purpose
+        function addAgeValidation() {
+            const purposeField = document.getElementById('purpose');
+            const dobField = document.getElementById('dob');
+            
+            function validateAge() {
+                const purpose = purposeField ? purposeField.value : '';
+                const dob = dobField ? dobField.value : '';
+                
+                if (purpose && dob) {
+                    const birthDate = new Date(dob);
+                    const today = new Date();
+                    const age = today.getFullYear() - birthDate.getFullYear();
+                    const monthDiff = today.getMonth() - birthDate.getMonth();
+                    const actualAge = (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) ? age - 1 : age;
+                    
+                    if (purpose === 'training' && actualAge <= 13) {
+                        clearSuccess('dob');
+                        showError('dob', `You are ${actualAge} years old. You must be older than 13 for training programs.`);
+                    } else if (purpose === 'job' && actualAge <= 15) {
+                        clearSuccess('dob');
+                        showError('dob', `You are ${actualAge} years old. You must be over 15 for job opportunities.`);
+                    } else if (purpose && dob) {
+                        clearError('dob');
+                        showSuccess('dob', `Valid age (${actualAge} years) for ${purpose === 'job' ? 'job opportunities' : 'training programs'}`);
+                    }
+                } else if (dob && !purpose) {
+                    clearError('dob');
+                    clearSuccess('dob');
+                } else if (purpose && !dob) {
+                    clearError('dob');
+                    clearSuccess('dob');
+                }
+            }
+            
+            if (purposeField) {
+                purposeField.addEventListener('change', function() {
+                    const value = this.value;
+                    if (value === '') {
+                        clearError('purpose');
+                        clearSuccess('purpose');
+                    } else {
+                        clearError('purpose');
+                        showSuccess('purpose', `Selected: ${value === 'job' ? 'Job Opportunities' : 'Training & Learning'}`);
+                    }
+                    validateAge();
+                });
+            }
+            
+            if (dobField) {
+                dobField.addEventListener('change', validateAge);
+                dobField.addEventListener('input', validateAge);
+            }
+        }
+
+        // Add client type selection logic
+        function addClientTypeLogic() {
+            const clientTypeField = document.getElementById('clientType');
+            const clientNationalIdGroup = document.getElementById('clientNationalIdGroup');
+            const clientNationalIdField = document.getElementById('clientNationalId');
+            const companyNameField = document.getElementById('companyName');
+            
+            if (clientTypeField) {
+                clientTypeField.addEventListener('change', function() {
+                    const value = this.value;
+                    
+                    if (value === '') {
+                        clearError('clientType');
+                        clearSuccess('clientType');
+                        // Hide National ID field
+                        if (clientNationalIdGroup) {
+                            clientNationalIdGroup.style.display = 'none';
+                            clientNationalIdField.removeAttribute('required');
+                        }
+                    } else if (value === 'person') {
+                        clearError('clientType');
+                        showSuccess('clientType', 'Selected: Individual Person');
+                        // Show National ID field for persons
+                        if (clientNationalIdGroup) {
+                            clientNationalIdGroup.style.display = 'block';
+                            clientNationalIdField.setAttribute('required', 'required');
+                        }
+                        // Update placeholder
+                        if (companyNameField) {
+                            companyNameField.placeholder = 'Enter your full name';
+                        }
+                    } else if (value === 'company') {
+                        clearError('clientType');
+                        showSuccess('clientType', 'Selected: Company/Organization');
+                        // Hide National ID field for companies
+                        if (clientNationalIdGroup) {
+                            clientNationalIdGroup.style.display = 'none';
+                            clientNationalIdField.removeAttribute('required');
+                            clearError('clientNationalId');
+                            clearSuccess('clientNationalId');
+                        }
+                        // Update placeholder
+                        if (companyNameField) {
+                            companyNameField.placeholder = 'Enter company/organization name';
+                        }
+                    }
+                });
+            }
+        }
+
+        // Add client age validation (must be over 18)
+        function addClientAgeValidation() {
+            const clientTypeField = document.getElementById('clientType');
+            const dateField = document.getElementById('date');
+            
+            function validateClientAge() {
+                const clientType = clientTypeField ? clientTypeField.value : '';
+                const dob = dateField ? dateField.value : '';
+                
+                if (dob && clientType) {
+                    const birthDate = new Date(dob);
+                    const today = new Date();
+                    const age = today.getFullYear() - birthDate.getFullYear();
+                    const monthDiff = today.getMonth() - birthDate.getMonth();
+                    const actualAge = (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) ? age - 1 : age;
+                    
+                    if (actualAge <= 18) {
+                        clearSuccess('date');
+                        showError('date', `You are ${actualAge} years old. You must be over 18 to request services.`);
+                    } else {
+                        clearError('date');
+                        showSuccess('date', `Valid age (${actualAge} years) for service requests`);
+                    }
+                } else if (dob && !clientType) {
+                    clearError('date');
+                    clearSuccess('date');
+                } else if (clientType && !dob) {
+                    clearError('date');
+                    clearSuccess('date');
+                }
+            }
+            
+            if (clientTypeField) {
+                clientTypeField.addEventListener('change', validateClientAge);
+            }
+            
+            if (dateField) {
+                dateField.addEventListener('change', validateClientAge);
+                dateField.addEventListener('input', validateClientAge);
+            }
+        }
+
+        // OTP Management
+        let currentOTP = '';
+        let clientCurrentOTP = '';
+        let isEmailVerified = false;
+        let isClientEmailVerified = false;
+        let lastOTPSentTime = 0;
+        let clientLastOTPSentTime = 0;
+        let resendCooldown = 60; // 60 seconds
+
+        // Generate random 6-digit OTP
+        function generateOTP() {
+            return Math.floor(100000 + Math.random() * 900000).toString();
+        }
+
+        // Send OTP via backend API
+        async function sendOTPEmail(email, userType) {
+            try {
+                console.log(`📧 Sending OTP to ${email} via backend...`);
+                
+                const response = await fetch('http://localhost:3001/api/send-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        userType: userType
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Update last sent time
+                    const currentTime = Date.now();
+                    if (userType === 'client') {
+                        clientLastOTPSentTime = currentTime;
+                    } else {
+                        lastOTPSentTime = currentTime;
+                    }
+                    
+                    alert(`✅ OTP sent successfully to ${email}!\n\nPlease check your email inbox (and spam folder) for the verification code.`);
+                    
+                    // Start cooldown timer
+                    startResendCooldown(userType);
+                    
+                    return true;
+                } else {
+                    throw new Error(data.error || 'Failed to send OTP');
+                }
+                
+            } catch (error) {
+                console.error('Error sending OTP:', error);
+                
+                if (error.message.includes('fetch')) {
+                    alert(`⚠️ Backend Connection Error\n\nCannot connect to the email server. Please ensure:\n\n1. Backend server is running (npm run dev)\n2. Server is accessible at http://localhost:3001\n3. Check console for detailed errors`);
+                } else {
+                    alert(`❌ Failed to send OTP\n\n${error.message}\n\nPlease try again or contact support.`);
+                }
+                
+                return false;
+            }
+        }
+
+        // Setup OTP input behavior
+        function setupOTPInputs(prefix = '') {
+            const otpInputs = [];
+            for (let i = 1; i <= 6; i++) {
+                const input = document.getElementById(`${prefix}otp${i}`);
+                if (input) {
+                    otpInputs.push(input);
+                }
+            }
+
+            otpInputs.forEach((input, index) => {
+                input.addEventListener('input', function(e) {
+                    const value = e.target.value;
+                    
+                    // Only allow numbers
+                    if (!/^[0-9]$/.test(value)) {
+                        e.target.value = '';
+                        return;
+                    }
+
+                    // Add filled class
+                    e.target.classList.add('filled');
+
+                    // Move to next input
+                    if (value && index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+
+                    // Check if all inputs are filled
+                    const allFilled = otpInputs.every(inp => inp.value !== '');
+                    if (allFilled) {
+                        const enteredOTP = otpInputs.map(inp => inp.value).join('');
+                        if (prefix === 'client') {
+                            verifyClientOTP(enteredOTP);
+                        } else {
+                            verifyOTP(enteredOTP);
+                        }
+                    }
+                });
+
+                input.addEventListener('keydown', function(e) {
+                    // Handle backspace
+                    if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                        otpInputs[index - 1].focus();
+                        otpInputs[index - 1].classList.remove('filled');
+                    }
+                });
+
+                input.addEventListener('paste', function(e) {
+                    e.preventDefault();
+                    const pastedData = e.clipboardData.getData('text');
+                    if (/^\d{6}$/.test(pastedData)) {
+                        for (let i = 0; i < 6; i++) {
+                            if (otpInputs[i]) {
+                                otpInputs[i].value = pastedData[i];
+                                otpInputs[i].classList.add('filled');
+                            }
+                        }
+                        if (prefix === 'client') {
+                            verifyClientOTP(pastedData);
+                        } else {
+                            verifyOTP(pastedData);
+                        }
+                    }
+                });
+            });
+        }
+
+        // Verify OTP for white hat via backend
+        async function verifyOTP(enteredOTP) {
+            try {
+                const emailField = document.getElementById('email');
+                const email = emailField.value.trim();
+                
+                const response = await fetch('http://localhost:3001/api/verify-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        otp: enteredOTP,
+                        userType: 'whitehat'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    isEmailVerified = true;
+                    clearError('otp');
+                    showSuccess('otp', 'Email verified successfully!');
+                    document.getElementById('otpSection').style.border = '2px solid #38a169';
+                    document.getElementById('verifyOtp').textContent = '✅ Verified';
+                    document.getElementById('verifyOtp').disabled = true;
+                } else {
+                    showError('otp', data.error || 'Invalid OTP. Please check and try again.');
+                }
+                
+            } catch (error) {
+                console.error('Backend connection failed:', error);
+                showError('otp', 'Cannot connect to backend server. Please ensure the backend is running.');
+            }
+        }
+
+        // Verify OTP for client via backend
+        async function verifyClientOTP(enteredOTP) {
+            try {
+                const emailField = document.getElementById('clientEmail');
+                const email = emailField.value.trim();
+                
+                const response = await fetch('http://localhost:3001/api/verify-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        otp: enteredOTP,
+                        userType: 'client'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    isClientEmailVerified = true;
+                    clearError('clientOtp');
+                    showSuccess('clientOtp', 'Email verified successfully!');
+                    document.getElementById('clientOtpSection').style.border = '2px solid #38a169';
+                    document.getElementById('clientVerifyOtp').textContent = '✅ Verified';
+                    document.getElementById('clientVerifyOtp').disabled = true;
+                } else {
+                    showError('clientOtp', data.error || 'Invalid OTP. Please check and try again.');
+                }
+                
+            } catch (error) {
+                console.error('Backend connection failed:', error);
+                showError('clientOtp', 'Cannot connect to backend server. Please ensure the backend is running.');
+            }
+        }
+
+        // Enhanced email validation with OTP trigger
+        function addEmailValidationWithOTP(fieldId) {
+            const field = document.getElementById(fieldId);
+            const isClient = fieldId.includes('client');
+            const otpSection = document.getElementById(isClient ? 'clientOtpSection' : 'otpSection');
+            const otpInfo = document.getElementById(isClient ? 'clientOtpInfo' : 'otpInfo');
+            
+            if (field) {
+                field.addEventListener('input', function() {
+                    const value = this.value.trim();
+                    if (value === '') {
+                        clearError(fieldId);
+                        clearSuccess(fieldId);
+                        otpSection.classList.remove('show');
+                        if (isClient) {
+                            isClientEmailVerified = false;
+                        } else {
+                            isEmailVerified = false;
+                        }
+                    } else if (!value.includes('@gmail.com')) {
+                        clearSuccess(fieldId);
+                        showError(fieldId, 'Email must be a Gmail address (@gmail.com)');
+                        otpSection.classList.remove('show');
+                    } else if (!value.endsWith('@gmail.com')) {
+                        clearSuccess(fieldId);
+                        showError(fieldId, 'Email must end with @gmail.com');
+                        otpSection.classList.remove('show');
+                    } else {
+                        clearError(fieldId);
+                        showSuccess(fieldId, 'Valid Gmail address - Sending OTP...');
+                        
+                        // Reset verification status
+                        if (isClient) {
+                            isClientEmailVerified = false;
+                        } else {
+                            isEmailVerified = false;
+                        }
+                        
+                        // Send real OTP via backend
+                        const userType = isClient ? 'client' : 'whitehat';
+                        sendOTPEmail(value, userType).then(success => {
+                            if (success) {
+                                // Update UI to show OTP section
+                                otpInfo.textContent = `We've sent a 6-digit code to ${value}`;
+                                otpSection.classList.add('show');
+                                showSuccess(fieldId, `✅ Real OTP sent to ${value}`);
+                                
+                                // Focus first OTP input
+                                setTimeout(() => {
+                                    const firstOtpInput = document.getElementById(isClient ? 'clientOtp1' : 'otp1');
+                                    if (firstOtpInput) firstOtpInput.focus();
+                                }, 100);
+                            } else {
+                                showError(fieldId, 'Failed to send OTP. Please try again.');
+                            }
+                        });
+                    }
+                });
+            }
+        }
+
+        // Send OTP Email function (backend only - no fallback)
+        async function sendOTPEmail(email, userType) {
+            try {
+                const response = await fetch('http://localhost:3001/api/send-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        userType: userType
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        alert(`✅ Real OTP sent to ${email}!\nCheck your Gmail inbox (including spam folder).`);
+                        return true;
+                    } else {
+                        alert(`❌ Failed to send OTP: ${data.error || 'Unknown error'}`);
+                        return false;
+                    }
+                } else {
+                    const errorData = await response.json();
+                    alert(`❌ Failed to send OTP: ${errorData.error || 'Server error'}`);
+                    return false;
+                }
+            } catch (error) {
+                console.error('Backend connection failed:', error);
+                alert('❌ Cannot connect to backend server. Please ensure the backend is running on port 3001.');
+                return false;
+            }
+        }
+
+        // Real OTP sending function with resend functionality
+        async function sendTestOTP(fieldId) {
+            const emailField = document.getElementById(fieldId);
+            const email = emailField.value.trim();
+            const button = document.querySelector(`button[onclick="sendTestOTP('${fieldId}')"]`);
+            
+            if (!email) {
+                alert('Please enter an email address first');
+                return;
+            }
+            
+            if (!email.endsWith('@gmail.com')) {
+                alert('Please enter a Gmail address');
+                return;
+            }
+            
+            // Disable button and show loading
+            button.disabled = true;
+            button.textContent = 'Sending...';
+            
+            try {
+                // Try to send real email via backend
+                const response = await fetch('http://localhost:3001/api/send-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        userType: fieldId.includes('client') ? 'client' : 'whitehat'
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        alert(`✅ Real OTP sent to ${email}!\nCheck your Gmail inbox (including spam folder).`);
+                        
+                        // Show OTP section
+                        const otpSection = document.getElementById(fieldId.includes('client') ? 'clientOtpSection' : 'otpSection');
+                        const otpInfo = document.getElementById(fieldId.includes('client') ? 'clientOtpInfo' : 'otpInfo');
+                        
+                        if (otpSection && otpInfo) {
+                            otpInfo.textContent = `Real OTP sent to ${email} - Check your Gmail!`;
+                            otpSection.classList.add('show');
+                        }
+                        
+                        // Start 30-second cooldown
+                        startOTPCooldown(button, 30);
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.log('Backend not available, using demo mode');
+            }
+            
+            // Fallback: Demo OTP
+            const otp = Math.floor(100000 + Math.random() * 900000).toString();
+            console.log(`Demo OTP for ${email}: ${otp}`);
+            alert(`🔐 Demo OTP: ${otp}\n\nFor: ${email}\n(Backend not running - this is demo mode)\nCheck your Gmail for real emails when backend is running.`);
+            
+            // Store demo OTP
+            window.demoOTPs = window.demoOTPs || {};
+            window.demoOTPs[email] = otp;
+            
+            // Show OTP section
+            const otpSection = document.getElementById(fieldId.includes('client') ? 'clientOtpSection' : 'otpSection');
+            const otpInfo = document.getElementById(fieldId.includes('client') ? 'clientOtpInfo' : 'otpInfo');
+            
+            if (otpSection && otpInfo) {
+                otpInfo.textContent = `Demo code sent to ${email}`;
+                otpSection.classList.add('show');
+            }
+            
+            // Start 30-second cooldown
+            startOTPCooldown(button, 30);
+        }
+        
+        // 30-second cooldown function
+        function startOTPCooldown(button, seconds) {
+            let timeLeft = seconds;
+            button.disabled = true;
+            button.textContent = `Resend in ${timeLeft}s`;
+            
+            const countdown = setInterval(() => {
+                timeLeft--;
+                if (timeLeft > 0) {
+                    button.textContent = `Resend in ${timeLeft}s`;
+                } else {
+                    button.disabled = false;
+                    button.textContent = 'Resend OTP';
+                    clearInterval(countdown);
+                }
+            }, 1000);
+        }
+
+        // Initialize real-time validation
+        addNameValidation();
+        addAgeValidation();
+        addClientTypeLogic();
+        addClientAgeValidation();
+        addNationalIdValidation('nationalId');
+        addNationalIdValidation('clientNationalId');
+        addEmailValidationWithOTP('email');
+        addEmailValidationWithOTP('clientEmail');
+        addPasswordValidation();
+        
+        // Resend cooldown management
+        function startResendCooldown(userType) {
+            const resendBtn = document.getElementById(userType === 'client' ? 'clientResendOtp' : 'resendOtp');
+            let timeLeft = resendCooldown;
+            
+            resendBtn.disabled = true;
+            resendBtn.textContent = `Resend in ${timeLeft}s`;
+            
+            const countdown = setInterval(() => {
+                timeLeft--;
+                resendBtn.textContent = `Resend in ${timeLeft}s`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    resendBtn.disabled = false;
+                    resendBtn.textContent = 'Resend Code';
+                }
+            }, 1000);
+        }
+        
+        function canResendOTP(userType) {
+            const currentTime = Date.now();
+            const lastSentTime = userType === 'client' ? clientLastOTPSentTime : lastOTPSentTime;
+            const timeDiff = (currentTime - lastSentTime) / 1000; // Convert to seconds
+            
+            return timeDiff >= resendCooldown;
+        }
+
+        // Add resend OTP functionality with cooldown
+        document.getElementById('resendOtp').addEventListener('click', async function() {
+            const emailField = document.getElementById('email');
+            
+            if (!canResendOTP('whitehat')) {
+                const timeLeft = Math.ceil(resendCooldown - (Date.now() - lastOTPSentTime) / 1000);
+                showError('otp', `Please wait ${timeLeft} seconds before requesting a new code`);
+                return;
+            }
+            
+            if (emailField && emailField.value.endsWith('@gmail.com')) {
+                isEmailVerified = false;
+                const success = await sendOTPEmail(emailField.value, 'whitehat');
+                
+                if (!success) {
+                    return; // Don't proceed if sending failed
+                }
+                
+                // Clear OTP inputs
+                for (let i = 1; i <= 6; i++) {
+                    const input = document.getElementById(`otp${i}`);
+                    if (input) {
+                        input.value = '';
+                        input.classList.remove('filled');
+                    }
+                }
+                
+                clearError('otp');
+                clearSuccess('otp');
+                document.getElementById('otpSection').style.border = '2px solid #667eea';
+                document.getElementById('verifyOtp').textContent = 'Verify Code';
+                document.getElementById('verifyOtp').disabled = false;
+                document.getElementById('otp1').focus();
+            }
+        });
+
+        document.getElementById('clientResendOtp').addEventListener('click', async function() {
+            const emailField = document.getElementById('clientEmail');
+            
+            if (!canResendOTP('client')) {
+                const timeLeft = Math.ceil(resendCooldown - (Date.now() - clientLastOTPSentTime) / 1000);
+                showError('clientOtp', `Please wait ${timeLeft} seconds before requesting a new code`);
+                return;
+            }
+            
+            if (emailField && emailField.value.endsWith('@gmail.com')) {
+                isClientEmailVerified = false;
+                const success = await sendOTPEmail(emailField.value, 'client');
+                
+                if (!success) {
+                    return; // Don't proceed if sending failed
+                }
+                
+                // Clear OTP inputs
+                for (let i = 1; i <= 6; i++) {
+                    const input = document.getElementById(`clientOtp${i}`);
+                    if (input) {
+                        input.value = '';
+                        input.classList.remove('filled');
+                    }
+                }
+                
+                clearError('clientOtp');
+                clearSuccess('clientOtp');
+                document.getElementById('clientOtpSection').style.border = '2px solid #667eea';
+                document.getElementById('clientVerifyOtp').textContent = 'Verify Code';
+                document.getElementById('clientVerifyOtp').disabled = false;
+                document.getElementById('clientOtp1').focus();
+            }
+        });
+
+        // Add manual verify OTP button functionality
+        document.getElementById('verifyOtp').addEventListener('click', function() {
+            const otpInputs = [];
+            for (let i = 1; i <= 6; i++) {
+                const input = document.getElementById(`otp${i}`);
+                if (input) otpInputs.push(input.value);
+            }
+            const enteredOTP = otpInputs.join('');
+            if (enteredOTP.length === 6) {
+                verifyOTP(enteredOTP);
+            } else {
+                showError('otp', 'Please enter all 6 digits');
+            }
+        });
+
+        document.getElementById('clientVerifyOtp').addEventListener('click', function() {
+            const otpInputs = [];
+            for (let i = 1; i <= 6; i++) {
+                const input = document.getElementById(`clientOtp${i}`);
+                if (input) otpInputs.push(input.value);
+            }
+            const enteredOTP = otpInputs.join('');
+            if (enteredOTP.length === 6) {
+                verifyClientOTP(enteredOTP);
+            } else {
+                showError('clientOtp', 'Please enter all 6 digits');
+            }
+        });
+
+        // Setup OTP inputs
+        setupOTPInputs(); // For white hat
+        setupOTPInputs('client'); // For client
+    </script>
+</body>
+</html>
